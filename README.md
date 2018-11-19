@@ -36,9 +36,11 @@ Steps taken for training the model and building the web service.
    The 'categorize-lambda' prediction function predicts the label and updates the status as UPDATED in DynamoDB table.
 8. Hosting the website on AWS S3. Building a UI for submitting requests to the API using HTML, CSS and JavaScript files
 
-Improvements
+#### Improvements
 
 I didnt make use of all the data to train my model because of the size constraint on the lambda when files are unzipped. However, by utilizing all the data we can train the model more accurately and improve the prediction results.
 Also by removing the stop-words and using NLP techniques like lemmatization we can refine the text input to the model for better classification.
 We can try using other models like Artificial Neural Networks and fine tuning the parameters help us decide on the best model and improve the results
+
+We can use CI/CD to deploy the code changes faster and also use cloud formation to provision all my resources. 
 
