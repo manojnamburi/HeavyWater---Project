@@ -1,0 +1,43 @@
+service: pydata-heavywater
+
+plugins:
+ - serverless-python-requirements
+
+custom:
+ topicName: newPosts
+ pythonRequirements:
+  slim: true
+
+provider:
+ name: aws
+ runtime: python3.6
+ region: us-east-1
+ deploymentBucket:
+  name: pydata.heavywater
+ environment: 
+  TOPIC_NAME: ${self:custom.topicName}
+ iamRoleStatements:
+  - Effect: "Allow"
+    Action:
+     - "dynamodb:Query"
+     - "dynamodb:Scan"
+     - "dynamodb:PutItem"
+     - "dynamodb:UpdateItem"
+     - "sns:Publish"
+     - "s3:PutObject"
+     - "s3:GetObject"
+     - "s3:PutObjectAcl"
+     - "s3:GetBucketLocation"
+     - "logs:CreateLogGroup"
+     - "logs:CreateLogStream"
+     - "logs:PutLogEvents"
+    Resource: "*"
+			
+functions:
+ categorize_lambda:
+  name: categorize-lambda
+  description : prediction_funtion
+  handler: main.lambda_handler
+  events:
+   - sns: ${self:custom.topicName}
+		
